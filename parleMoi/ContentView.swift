@@ -34,164 +34,164 @@ struct ContentView: View {
     
     
     var body: some View {
-        //NavigationView {
-        VStack {
-            TitreApp()
-                .toolbar {
-                    ToolbarItemGroup(placement: .bottomBar) {
-                        HStack (spacing:10) {
-                            //type animation pour la fenetre popupup
-                            Button("about") {
-                                withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.5))
-                                {
-                                    self.montrerPopup.toggle()
+        NavigationView {
+            VStack {
+                TitreApp()
+                    .toolbar {
+                        ToolbarItemGroup(placement: .bottomBar) {
+                            HStack (spacing:10) {
+                                //type animation pour la fenetre popupup
+                                Button("about") {
+                                    withAnimation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.5))
+                                    {
+                                        self.montrerPopup.toggle()
+                                    }
                                 }
+                                Spacer()
                             }
-                            Spacer()
                         }
-                    }
-                }// toolbar
-            ZStack {
-                //TextEditor(text: $monTexte)
-                TextEditor(text:  .constant(utiliserMicro.transformerVoixText ?? monTexte))
-                //Text(utiliserMicro.transformerVoixText ?? "")
-                    .frame(width: 285, height: 350)
-                    .background(Color("monVert"))
-                    .cornerRadius(10)
-                    .disabled(true)
-                
-                VuePopup()
-                 .padding()
-                 .offset(x: 0, y:  montrerPopup ? -popupHauteur + popupHauteur : -UIScreen.main.bounds.height)
-            }
-            VStack {
-                // creation picker
-                Picker("", selection: $selection) {
-                    ForEach(0..<pictogramme.count) {choix in
-                        Image(systemName: pictogramme[choix])
-                    }
-                }
-                .frame(width: largeurEcran - 100)
-                .pickerStyle(SegmentedPickerStyle())
-                // message alerte
-                .alert(isPresented: $montrerAlerte, content: {
-                    Alert(title: Text("listenAlert"))
-                })
-                
-                //Selecteur
-                if selection == 0 {
-                    //transcription
-                    Button {
-                        // Action
-                        voixSynthese.arretLecture()
-                        utiliserMicro.etatProcessus()
-                        
-                    } label: {
-                        if utiliserMicro.enregistrementEnCours {
-                            Image(systemName: Ressources.images.stop.rawValue)
-                        } else {
-                            Image(systemName: Ressources.images.micro.rawValue)
-                        }
-                    }
-                    .imageScale(.large)
-                    .frame(width: 100, height: 100)
-                    .background(Color("CouleurPremierPlan"))
-                    .foregroundColor(.white)
-                    .clipShape(Circle())
-                    .disabled(utiliserMicro.boutonUtilisationMicro ? false : true)
-                    .opacity(utiliserMicro.boutonUtilisationMicro ? 1 : 0.4)
+                    }// toolbar
+                ZStack {
+                    //TextEditor(text: $monTexte)
+                    TextEditor(text:  .constant(utiliserMicro.transformerVoixText ?? monTexte))
+                    //Text(utiliserMicro.transformerVoixText ?? "")
+                        .frame(width: 285, height: 350)
+                        .background(Color("monVert"))
+                        .cornerRadius(10)
+                        .disabled(true)
                     
-                } else {
-                    // selecteur sur lecture
-                    // affichage du slider de la vitesse de lecture.
-                    VStack {
-                        Slider(
-                            value: $value,
-                            in: min...max,
-                            step: step,
-                            onEditingChanged: { (success) in
+                    VuePopup()
+                        .padding()
+                        .offset(x: 0, y:  montrerPopup ? -popupHauteur + popupHauteur : -UIScreen.main.bounds.height)
+                }
+                VStack {
+                    // creation picker
+                    Picker("", selection: $selection) {
+                        ForEach(0..<pictogramme.count) {choix in
+                            Image(systemName: pictogramme[choix])
+                        }
+                    }
+                    .frame(width: largeurEcran - 100)
+                    .pickerStyle(SegmentedPickerStyle())
+                    // message alerte
+                    .alert(isPresented: $montrerAlerte, content: {
+                        Alert(title: Text("listenAlert"))
+                    })
+                    
+                    //Selecteur
+                    if selection == 0 {
+                        //transcription
+                        Button {
+                            // Action
+                            voixSynthese.arretLecture()
+                            utiliserMicro.etatProcessus()
+                            
+                        } label: {
+                            if utiliserMicro.enregistrementEnCours {
+                                Image(systemName: Ressources.images.stop.rawValue)
+                            } else {
+                                Image(systemName: Ressources.images.micro.rawValue)
+                            }
+                        }
+                        .imageScale(.large)
+                        .frame(width: 100, height: 100)
+                        .background(Color("CouleurPremierPlan"))
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                        .disabled(utiliserMicro.boutonUtilisationMicro ? false : true)
+                        .opacity(utiliserMicro.boutonUtilisationMicro ? 1 : 0.4)
+                        
+                    } else {
+                        // selecteur sur lecture
+                        // affichage du slider de la vitesse de lecture.
+                        VStack {
+                            Slider(
+                                value: $value,
+                                in: min...max,
+                                step: step,
+                                onEditingChanged: { (success) in
                                     voixSynthese.rythmeLecture(vitesseLecture: value)
-                            },
-                            minimumValueLabel:
-                                Text("min")
-                                .foregroundColor(Color("CouleurPremierPlan"))
-                                .font(.system(size: 15))
-                            ,
-                            maximumValueLabel: Text("max")
-                                .foregroundColor(Color("CouleurPremierPlan"))
-                                .font(.system(size: 15))) {
+                                },
+                                minimumValueLabel:
+                                    Text("min")
+                                    .foregroundColor(Color("CouleurPremierPlan"))
+                                    .font(.system(size: 15))
+                                ,
+                                maximumValueLabel: Text("max")
+                                    .foregroundColor(Color("CouleurPremierPlan"))
+                                    .font(.system(size: 15))) {
+                                    }
+                            // change la couleur du slider
+                                    .accentColor(Color("CouleurPremierPlan"))
+                            // change la couleur du slider
+                                    .frame(width: largeurEcran - 100)
+                            
                         }
-                                // change la couleur du slider
-                                .accentColor(Color("CouleurPremierPlan"))
-                                // change la couleur du slider
-                                .frame(width: largeurEcran - 100)
-                               
-                    }
-                    .disabled(voixSynthese.speechSynthesizer.isSpeaking ? true : false)
-                    .opacity(voixSynthese.speechSynthesizer.isSpeaking ? 0.4 : 1)
-                    
-                    // affichage texte
-                    HStack {
-                        Text("speechSpeed")
-                        Text((String(format: "%.1f",value)))
-                    }
-                    .foregroundColor(Color("CouleurPremierPlan"))
-                    .font(.system(size: 15))
-                    .opacity(voixSynthese.speechSynthesizer.isSpeaking ? 0.4 : 1)
-                    // VueSlider()
-                    
-                    Button {
-                        // Action lecture
-                        utiliserMicro.arretTranscription()
-                        if utiliserMicro.transformerVoixText != nil {
-                            self.montrerAlerte = false
-                            self.etatProcessusLecture()
-                        } else {
-                            self.montrerAlerte = true
-                        }
+                        .disabled(voixSynthese.speechSynthesizer.isSpeaking ? true : false)
+                        .opacity(voixSynthese.speechSynthesizer.isSpeaking ? 0.4 : 1)
                         
-                    } label: {
+                        // affichage texte
+                        HStack {
+                            Text("speechSpeed")
+                            Text((String(format: "%.1f",value)))
+                        }
+                        .foregroundColor(Color("CouleurPremierPlan"))
+                        .font(.system(size: 15))
+                        .opacity(voixSynthese.speechSynthesizer.isSpeaking ? 0.4 : 1)
+                        // VueSlider()
+                        
+                        Button {
+                            // Action lecture
+                            utiliserMicro.arretTranscription()
+                            if utiliserMicro.transformerVoixText != nil {
+                                self.montrerAlerte = false
+                                self.etatProcessusLecture()
+                            } else {
+                                self.montrerAlerte = true
+                            }
+                            
+                        } label: {
+                            if voixSynthese.lectureEnCours {
+                                Image(systemName: Ressources.images.stop.rawValue)
+                            } else {
+                                Image(systemName: Ressources.images.lecture.rawValue)
+                            }
+                            
+                        }
+                        .imageScale(.large)
+                        .frame(width: 100, height: 100)
+                        .background(Color("CouleurPremierPlan"))
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                        .disabled(utiliserMicro.boutonUtilisationMicro ? false : true)
+                        .opacity(utiliserMicro.boutonUtilisationMicro ? 1 : 0.4)
+                    } // Vstack
+                }
+                // gestion des messages de texte en fonction du bouton
+                VStack {
+                    if selection == 0 {
+                        if utiliserMicro.enregistrementEnCours {
+                            Text("registrationStop")
+                            
+                        } else {
+                            Text("registrationStart")
+                        }
+                    } else {
                         if voixSynthese.lectureEnCours {
-                            Image(systemName: Ressources.images.stop.rawValue)
+                            Text("listenStop")
                         } else {
-                            Image(systemName: Ressources.images.lecture.rawValue)
+                            Text("listenStart")
                         }
-                        
-                    }
-                    .imageScale(.large)
-                    .frame(width: 100, height: 100)
-                    .background(Color("CouleurPremierPlan"))
-                    .foregroundColor(.white)
-                    .clipShape(Circle())
-                    .disabled(utiliserMicro.boutonUtilisationMicro ? false : true)
-                    .opacity(utiliserMicro.boutonUtilisationMicro ? 1 : 0.4)
-                } // Vstack
-            }
-            // gestion des messages de texte en fonction du bouton
-            VStack {
-                if selection == 0 {
-                    if utiliserMicro.enregistrementEnCours {
-                        Text("registrationStop")
-                        
-                    } else {
-                        Text("registrationStart")
-                    }
-                } else {
-                    if voixSynthese.lectureEnCours {
-                        Text("listenStop")
-                    } else {
-                        Text("listenStart")
                     }
                 }
+                .foregroundColor(Color("CouleurPremierPlan"))
+                .font(.system(size: 15))
             }
-            .foregroundColor(Color("CouleurPremierPlan"))
-            .font(.system(size: 15))
+            .frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+            .edgesIgnoringSafeArea(.all)
+            .background(Color("CouleurTrameFond"))
         }
-        .frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-        .edgesIgnoringSafeArea(.all)
-        .background(Color("CouleurTrameFond"))
     }
-    //}
     //determine si le bouton lecture doit lancer ou arreter la lecture
     func etatProcessusLecture() {
         voixSynthese.speechSynthesizer.isSpeaking ? voixSynthese.arretLecture() : voixSynthese.demarrerLecture(texte: utiliserMicro.transformerVoixText ?? "")

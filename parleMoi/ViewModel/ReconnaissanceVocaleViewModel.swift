@@ -6,6 +6,7 @@
 //
 
 import Speech
+import AVFoundation
 
 class ReconnaissanceVocaleViewModel:NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     // création du manageur + configuration de la langue

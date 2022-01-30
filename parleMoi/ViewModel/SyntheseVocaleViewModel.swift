@@ -6,6 +6,7 @@
 //
 
 import AVFAudio
+import AVFoundation
 
 class SyntheseVocaleViewModel:NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
     
