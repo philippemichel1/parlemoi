@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  parleMoi
+
+  Created by Philippe MICHEL on 30/01/2022.
+  
+*/
+"titleApp" = "Talk to me !";
+"registrationStart" = "Click on the microphone and speak";
+"registrationStop" = "click on stop the transcription of your voice";
+"listenStart" = "Press play to listen";
+"listenStop" = "press stop to stop playback";
+"about" = "About US";
+"alertAutorisation" = "the application can't work";
+"listenAlert" = "nothing to listen to!";
+"speechSpeed" = "speed of speech";

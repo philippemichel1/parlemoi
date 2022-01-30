@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  parleMoi
+
+  Created by Philippe MICHEL on 30/01/2022.
+  
+*/
+"titleApp" = "Parlez-moi !";
+"registrationStart" = "Cliquer sur le microphone et parlez";
+"registrationStop" = "Cliquer sur stop pour arrêter la retranscription";
+"listenStart" = "Appuyez sur play pour écouter";
+"listenStop" = "appuyez sur stop pour arrêter la lecture";
+"about" = "A propos";
+"alertAutorisation" = "l'application ne peut pas fonctionner";
+"listenAlert" = "rien à écouter !";
+"speechSpeed" = "vitesse de diction";
