@@ -55,7 +55,7 @@ struct ContentView: View {
                     //TextEditor(text: $monTexte)
                     TextEditor(text:  .constant(utiliserMicro.transformerVoixText ?? monTexte))
                     //Text(utiliserMicro.transformerVoixText ?? "")
-                        .frame(width: 285, height: 350)
+                        .frame(width: 285, height: 325)
                         .background(Color("monVert"))
                         .cornerRadius(10)
                         .disabled(true)
