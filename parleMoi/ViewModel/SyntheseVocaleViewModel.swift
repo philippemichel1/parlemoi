@@ -14,11 +14,13 @@ class SyntheseVocaleViewModel:NSObject, ObservableObject, AVSpeechSynthesizerDel
     // variable de partage du canal audio
     var audioSession = AVAudioSession.sharedInstance()
     
+    let engine = AVAudioEngine()
+
     
     // vitesse de lecture
     var rate:Float = AVSpeechUtteranceDefaultSpeechRate
     
-    var volume:Float = 0.5
+    var volume:Float = 2
     
     // configuration type de langue
     var voice = AVSpeechSynthesisVoice(identifier: Locale.current.identifier)
@@ -47,13 +49,13 @@ class SyntheseVocaleViewModel:NSObject, ObservableObject, AVSpeechSynthesizerDel
         // gestion de partage du canal de son entre plusieurs application.
         do {
             // configuration du type de flux audio
-            try audioSession.setCategory(.playAndRecord, mode: .spokenAudio, options: .defaultToSpeaker)
+            try audioSession.setCategory(.playAndRecord, mode: .spokenAudio, options: .mixWithOthers)
             // demande l'utilisattion  du canal audio
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             // utterance (contient le texte à lire.
             let utterance = AVSpeechUtterance(string: texte)
             utterance.voice = voice
-            //utterance.volume = volume
+            utterance.volume = volume
             utterance.rate = rate
             speechSynthesizer.speak(utterance)
             
@@ -91,6 +93,8 @@ class SyntheseVocaleViewModel:NSObject, ObservableObject, AVSpeechSynthesizerDel
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        //engine.mainMixerNode.removeTap(onBus: 0)
+        //engine.stop()
         do {
             // rend le flux audio disponible pour les autre application
             try self.audioSession.setActive(false, options: .notifyOthersOnDeactivation)
