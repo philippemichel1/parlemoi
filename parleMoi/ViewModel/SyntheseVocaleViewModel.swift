@@ -20,7 +20,7 @@ class SyntheseVocaleViewModel:NSObject, ObservableObject, AVSpeechSynthesizerDel
     // vitesse de lecture
     var rate:Float = AVSpeechUtteranceDefaultSpeechRate
     
-    var volume:Float = 2
+    var volume:Float = 3
     
     // configuration type de langue
     var voice = AVSpeechSynthesisVoice(identifier: Locale.current.identifier)
