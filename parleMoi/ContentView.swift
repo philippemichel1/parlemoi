@@ -47,6 +47,8 @@ struct ContentView: View {
                                         self.montrerPopup.toggle()
                                     }
                                 }
+                                .foregroundColor(Color("CouleurPremierPlan"))
+                                .font(.system(size: 15))
                                 Spacer()
                             }
                         }
