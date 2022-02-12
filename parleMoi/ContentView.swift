@@ -61,7 +61,7 @@ struct ContentView: View {
                         .frame(width: 285, height: 350)
                         .background(Color("monVert"))
                         .cornerRadius(10)
-                        //.disabled(true)
+                        .disabled(utiliserMicro.engine.isRunning || (voixSynthese.speechSynthesizer.isSpeaking) ? true : false)
                     
                     VuePopup()
                         .padding()
