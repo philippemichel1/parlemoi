@@ -13,7 +13,7 @@ struct ContentView: View {
     @StateObject var utiliserMicro:ReconnaissanceVocaleViewModel = ReconnaissanceVocaleViewModel()
     @StateObject var voixSynthese:SyntheseVocaleViewModel = SyntheseVocaleViewModel()
     
-    @State var monTexte:String = ""
+    @State var TexteRetranscrit:String = ""
     @State var montrerPopup:Bool = false
     @State var montrerAlerte = false
     var pictogramme:[String] = ["person.wave.2.fill", "speaker.wave.2.fill"]
@@ -54,13 +54,14 @@ struct ContentView: View {
                         }
                     }// toolbar
                 ZStack {
-                    //TextEditor(text: $monTexte)
-                    TextEditor(text:  .constant(utiliserMicro.transformerVoixText ?? monTexte))
-                    //Text(utiliserMicro.transformerVoixText ?? "")
-                        .frame(width: 285, height: 325)
+                    TextEditor(text:  $TexteRetranscrit)
+                        .onReceive(NotificationCenter.default.publisher(for: Notification.Name.tacheDeRetrabscription), perform: {
+                            TexteRetranscrit = $0.object as? String ?? ""
+                        })
+                        .frame(width: 285, height: 350)
                         .background(Color("monVert"))
                         .cornerRadius(10)
-                        .disabled(true)
+                        //.disabled(true)
                     
                     VuePopup()
                         .padding()
@@ -196,7 +197,7 @@ struct ContentView: View {
     }
     //determine si le bouton lecture doit lancer ou arreter la lecture
     func etatProcessusLecture() {
-        voixSynthese.speechSynthesizer.isSpeaking ? voixSynthese.arretLecture() : voixSynthese.demarrerLecture(texte: utiliserMicro.transformerVoixText ?? "")
+        voixSynthese.speechSynthesizer.isSpeaking ? voixSynthese.arretLecture() : voixSynthese.demarrerLecture(texte: TexteRetranscrit)
     }
 }
 

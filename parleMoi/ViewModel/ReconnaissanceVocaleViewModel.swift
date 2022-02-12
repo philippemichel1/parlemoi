@@ -8,6 +8,10 @@
 import Speech
 import AVFoundation
 
+extension Notification.Name {
+    static let tacheDeRetrabscription = Notification.Name("taskAddNotification")
+}
+
 class ReconnaissanceVocaleViewModel:NSObject, ObservableObject, SFSpeechRecognizerDelegate {
     // création du manageur + configuration de la langue
     //var speechRecognizer:SFSpeechRecognizer? = SFSpeechRecognizer(locale: Locale(identifier: "fr-FR"))
@@ -87,6 +91,7 @@ class ReconnaissanceVocaleViewModel:NSObject, ObservableObject, SFSpeechRecogniz
                 
                 if resultat != nil {
                     self.transformerVoixText = resultat!.bestTranscription.formattedString
+                    NotificationCenter.default.post(name: NSNotification.Name.tacheDeRetrabscription, object: self.transformerVoixText)
                     //print(self.transformerVoixText) // affiche texte dans la console
                     
                 }
