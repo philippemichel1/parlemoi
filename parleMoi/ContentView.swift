@@ -40,22 +40,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                HStack {
                     TitreApp()
-                    Button {
-                        // Action
-                        rentrerClavier()
-                        self.clavierAfficher = false
-                        
-                    } label: {
-                            Image(systemName: Ressources.images.clavier.rawValue)
-                    }
-                   // .imageScale(.large)
-                   // .frame(width: 100, height: 100)
-                    .foregroundColor(Color("CouleurPremierPlan"))
-                    .disabled(clavierAfficher  ? false : true)
-                }
-                
                     .toolbar {
                         ToolbarItemGroup(placement: .bottomBar) {
                             HStack (spacing:10) {
@@ -72,6 +57,20 @@ struct ContentView: View {
                             }
                         }
                     }// toolbar
+                if clavierAfficher {
+                    Button {
+                        // Action
+                        rentrerClavier()
+                        self.clavierAfficher = false
+                        
+                    } label: {
+                            Image(systemName: Ressources.images.clavier.rawValue)
+                    }
+                    .imageScale(.large)
+                    .foregroundColor(Color("CouleurPremierPlan"))
+                    .disabled(clavierAfficher  ? false : true)
+                    
+                }
                 ZStack {
                     TextEditor(text:  $TexteRetranscrit)
                         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.tacheDeRetrabscription), perform: {
