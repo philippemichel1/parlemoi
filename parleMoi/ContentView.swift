@@ -16,6 +16,10 @@ struct ContentView: View {
     @State var TexteRetranscrit:String = ""
     @State var montrerPopup:Bool = false
     @State var montrerAlerte = false
+    @State var clavierAfficher:Bool = false
+    var largeurTextEditor:CGFloat = 285
+    var hauteurTextEditor:CGFloat = 350
+    
     var pictogramme:[String] = ["person.wave.2.fill", "speaker.wave.2.fill"]
     @State  var selection:Int = 0
     
@@ -36,7 +40,22 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TitreApp()
+                HStack {
+                    TitreApp()
+                    Button {
+                        // Action
+                        rentrerClavier()
+                        self.clavierAfficher = false
+                        
+                    } label: {
+                            Image(systemName: Ressources.images.clavier.rawValue)
+                    }
+                   // .imageScale(.large)
+                   // .frame(width: 100, height: 100)
+                    .foregroundColor(Color("CouleurPremierPlan"))
+                    .disabled(clavierAfficher  ? false : true)
+                }
+                
                     .toolbar {
                         ToolbarItemGroup(placement: .bottomBar) {
                             HStack (spacing:10) {
@@ -58,10 +77,21 @@ struct ContentView: View {
                         .onReceive(NotificationCenter.default.publisher(for: Notification.Name.tacheDeRetrabscription), perform: {
                             TexteRetranscrit = $0.object as? String ?? ""
                         })
-                        .frame(width: 285, height: 350)
+                    // clavier affiché
+                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
+                        self.clavierAfficher = true
+                        
+                        
+                        //clavier non afficher
+                    }.onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+                        self.clavierAfficher = false
+                        
+                    }
+                        .frame(width: largeurTextEditor, height: demensionTextEditor())
                         .background(Color("monVert"))
                         .cornerRadius(10)
                         .disabled(utiliserMicro.engine.isRunning || (voixSynthese.speechSynthesizer.isSpeaking) ? true : false)
+                    
                     
                     VuePopup()
                         .padding()
@@ -169,6 +199,7 @@ struct ContentView: View {
                         .disabled(utiliserMicro.boutonUtilisationMicro ? false : true)
                         .opacity(utiliserMicro.boutonUtilisationMicro ? 1 : 0.4)
                     } // Vstack
+                    
                 }
                 // gestion des messages de texte en fonction du bouton
                 VStack {
@@ -198,6 +229,16 @@ struct ContentView: View {
     //determine si le bouton lecture doit lancer ou arreter la lecture
     func etatProcessusLecture() {
         voixSynthese.speechSynthesizer.isSpeaking ? voixSynthese.arretLecture() : voixSynthese.demarrerLecture(texte: TexteRetranscrit)
+    }
+    
+    // rentre le clavier
+    func rentrerClavier() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
+    // modification de la hauteur en fonction de la detectiuon du clavier
+    func demensionTextEditor() -> CGFloat {
+        return clavierAfficher ? hauteurTextEditor - 100 : hauteurTextEditor
     }
 }
 

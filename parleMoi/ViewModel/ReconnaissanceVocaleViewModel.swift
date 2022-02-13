@@ -9,7 +9,7 @@ import Speech
 import AVFoundation
 
 extension Notification.Name {
-    static let tacheDeRetrabscription = Notification.Name("taskAddNotification")
+    static let tacheDeRetrabscription = Notification.Name("ajoutTacheNotification")
 }
 
 class ReconnaissanceVocaleViewModel:NSObject, ObservableObject, SFSpeechRecognizerDelegate {

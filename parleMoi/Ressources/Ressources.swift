@@ -20,5 +20,6 @@ struct Ressources {
         case ecoute = "speaker.wave.2.fill"
         case volume_min = "speaker.wave.1.fill"
         case volume_max = "speaker.wave.3.fill"
+        case clavier  = "keyboard.fill"
     }
 }
