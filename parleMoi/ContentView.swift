@@ -346,9 +346,10 @@ struct ContentView: View {
                         Image(systemName: pictogramme[choix])
                     }
                 }
-                
                 .frame(width: largeurEcran - 100)
                 .pickerStyle(SegmentedPickerStyle())
+                .disabled(utiliserMicro.engine.isRunning || (voixSynthese.speechSynthesizer.isSpeaking) ? true : false)
+                .opacity(utiliserMicro.engine.isRunning || (voixSynthese.speechSynthesizer.isSpeaking) ? 0.4 : 1)
                 
                 // message alerte
                 .alert(isPresented: $montrerAlerte, content: {
@@ -417,7 +418,6 @@ struct ContentView: View {
                     
                     Button {
                         // Action lecture
-                        utiliserMicro.arretTranscription()
                         if utiliserMicro.transformerVoixText != nil {
                             self.montrerAlerte = false
                             self.etatProcessusLecture()
