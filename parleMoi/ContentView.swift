@@ -36,7 +36,7 @@ struct ContentView: View {
     var maxTrackColor: UIColor?
     
     var body: some View {
-        NavigationView {
+        //NavigationView {
             VStack {
                 TitreApp()
                     .toolbar {
@@ -226,7 +226,7 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.all)
             .background(Color("CouleurTrameFond"))
             
-        } // fin navigationView
+        //} // fin navigationView
         
     } //someView
     // modification de la hauteur en fonction de la detectiuon du clavier

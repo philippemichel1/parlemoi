@@ -28,7 +28,7 @@ class ReconnaissanceVocaleViewModel:NSObject, ObservableObject, SFSpeechRecogniz
     
     
     @Published var enregistrementEnCours:Bool = false
-    @Published var transformerVoixText:String?
+    var transformerVoixText:String?
     @Published var boutonUtilisationMicro:Bool = false
     
     override init() {
