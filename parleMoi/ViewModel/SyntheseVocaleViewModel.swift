@@ -94,10 +94,13 @@ class SyntheseVocaleViewModel:NSObject, ObservableObject, AVSpeechSynthesizerDel
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         //engine.mainMixerNode.removeTap(onBus: 0)
-        //engine.stop()
+       // engine.stop()
+        //print("Terminer fin de lecture.")
+        self.lectureEnCours = false
         do {
             // rend le flux audio disponible pour les autre application
             try self.audioSession.setActive(false, options: .notifyOthersOnDeactivation)
+           
             print("Terminer fin de lecture.")
             self.lectureEnCours = false
             
