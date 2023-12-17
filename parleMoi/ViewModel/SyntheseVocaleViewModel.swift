@@ -7,8 +7,15 @@
 
 import AVFAudio
 import AVFoundation
+import Observation
 
-class SyntheseVocaleViewModel:NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
+// Jusqu'a IOS 16
+//class SyntheseVocaleViewModel:NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
+
+
+//IOS 17
+@Observable
+class SyntheseVocaleViewModel:NSObject, AVSpeechSynthesizerDelegate {
     
     var speechSynthesizer:AVSpeechSynthesizer = AVSpeechSynthesizer()
     // variable de partage du canal audio
@@ -26,7 +33,12 @@ class SyntheseVocaleViewModel:NSObject, ObservableObject, AVSpeechSynthesizerDel
     var voice = AVSpeechSynthesisVoice(identifier: Locale.current.identifier)
     
     // variable etat de la lecture
-    @Published var lectureEnCours:Bool = false
+    // IOS 16
+    //@Published var lectureEnCours:Bool = false
+    
+    // IOS 17
+    var lectureEnCours:Bool = false
+    
     
     override init() {
         super.init()

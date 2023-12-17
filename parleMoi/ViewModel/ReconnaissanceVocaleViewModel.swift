@@ -7,12 +7,19 @@
 
 import Speech
 import AVFoundation
+import Observation
 
 extension Notification.Name {
     static let tacheDeRetrabscription = Notification.Name("ajoutTacheNotification")
 }
 
-class ReconnaissanceVocaleViewModel:NSObject, ObservableObject, SFSpeechRecognizerDelegate {
+// Jusqu'à IOS 16
+//class ReconnaissanceVocaleViewModel:NSObject, ObservableObject, SFSpeechRecognizerDelegate {
+
+
+// ios 17
+@Observable
+class ReconnaissanceVocaleViewModel:NSObject, SFSpeechRecognizerDelegate {
     // création du manageur + configuration de la langue
     //var speechRecognizer:SFSpeechRecognizer? = SFSpeechRecognizer(locale: Locale(identifier: "fr-FR"))
     // création du manageur + configuration de la langue
@@ -26,10 +33,16 @@ class ReconnaissanceVocaleViewModel:NSObject, ObservableObject, SFSpeechRecogniz
     // tache de transcription de la voix en texte
     var task: SFSpeechRecognitionTask?
     
+    // Jusqu'à IOS 16
+//    @Published var enregistrementEnCours:Bool = false
+//    var transformerVoixText:String?
+//    @Published var boutonUtilisationMicro:Bool = false
     
-    @Published var enregistrementEnCours:Bool = false
+    
+    // IOS 17
+    var enregistrementEnCours:Bool = false
     var transformerVoixText:String?
-    @Published var boutonUtilisationMicro:Bool = false
+    var boutonUtilisationMicro:Bool = false
     
     override init() {
         super.init()
